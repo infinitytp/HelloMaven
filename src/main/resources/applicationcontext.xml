@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost/mvctest"/>
+		<property name="username" value="szhd"></property>
+		<property name="password" value="szhd"></property>
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="basePackage" value="com.infinitytp.mvcmybatis" />  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>  
+    </bean> -->
+	
+	<bean id="userDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.infinitytp.mvcmybatis.UserDaoImp"/>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	<bean id="userService" class="com.infinitytp.mvcmybatis.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean> 
+	<bean id="LoginController" class="com.infinitytp.mvcmybatis.LoginController">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	<bean id="LoginCon" class="com.infinitytp.mvcmybatis.LoginCon">
+		<property name="userService" ref="userService"></property>
+	</bean> 
+	<!-- <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="login.do">LoginController</prop>
+			</props>
+		</property>
+	</bean> -->
+
+</beans>

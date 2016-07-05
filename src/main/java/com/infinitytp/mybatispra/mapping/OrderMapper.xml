@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="com.infinitytp.mybatispra.mapping.OrderMapper">
+		<select id="getOrderById" parameterType="int" resultType="com.infinitytp.mybatispra.domain.Order">
+			select * from orders where order_id=#{id}
+		</select>
+		
+		<select id="selectOrder" parameterType="int" resultType="com.infinitytp.mybatispra.domain.Order">
+			select order_id id, order_no orderNo, order_price price from orders where order_id=#{id}
+		</select>
+		
+		<select id="selectOrderResultMap" parameterType="int" resultMap="orderResultMap">
+			select * from orders where order_id=#{id}
+		</select>
+		
+		<resultMap type="com.infinitytp.mybatispra.domain.Order" id="orderResultMap">
+			<!-- 用id属性来映射主键字段 -->
+			<id property="id" column="order_id"/>
+			<!-- 用result属性来映射非主键字段 -->
+			<result property="orderNo" column="order_no"/>
+			<result property="price" column="order_price"/>
+		</resultMap>
+	</mapper>
