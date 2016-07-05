@@ -51,5 +51,6 @@ public class TestAssociationCRUD {
 		sqlSession.close();
 		System.out.println(clazz);
 		System.out.println(clazz);
+		System.out.println(clazz);
 	}
 }
